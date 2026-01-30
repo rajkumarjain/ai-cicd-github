@@ -7,7 +7,7 @@ def get_coverage_percentage():
 
     # Run pytest with coverage flags as a subprocess
     result = subprocess.run(
-        ['pytest', '--cov=src', '--cov-report=json', '-q'],
+        ['pytest','--cov=src', '--cov-report=json', '-q'],
         capture_output=True,
         text=True
     )
@@ -17,7 +17,8 @@ def get_coverage_percentage():
         with open('coverage.json', 'r') as f:
             data = json.load(f)
             return data['totals']['percent_covered']
-    except (FileNotFoundError, KeyError):
+    except (FileNotFoundError, KeyError, json.JSONDecodeError) as e:
+        print(f"Error reading or parsing coverage.json: {e}", file=sys.stderr)
         return 0.0
 
 

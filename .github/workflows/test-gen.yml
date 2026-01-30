@@ -61,7 +61,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          python scripts/generate_tests.py ${{ steps.changed-files.outputs.files }}
+          python scripts/generate_tests.py "${{ steps.changed-files.outputs.files }}"
 
       - name: Commit generated tests
         if: steps.coverage-check.outcome == 'failure'
